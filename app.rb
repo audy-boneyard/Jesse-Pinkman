@@ -2,6 +2,7 @@ class JessePinkman
 
   get '/' do
     # render main page
+    @text = params[:text] || 'Type Something'
     erb :index
   end
 
@@ -9,7 +10,6 @@ class JessePinkman
   # bottom text
   # /bitch/add%20text%20to%the%top
   get "/bitch.jpg?" do
-    $stderr.puts params.inspect
     text = params[:text]
 
     # TODO implement caching
