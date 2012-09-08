@@ -8,7 +8,8 @@ class JessePinkman
   # generate image with custom top text and default
   # bottom text
   # /bitch/add%20text%20to%the%top
-  get '/bitch/:text/?' do
+  get "/bitch.jpg?" do
+    $stderr.puts params.inspect
     text = params[:text]
 
     # TODO implement caching
@@ -31,6 +32,11 @@ class JessePinkman
     content_type 'image/jpeg'
     jesse.image_data
   end
+
+end
+
+# Render a pinkman image
+def pinkman(text)
 
 end
 

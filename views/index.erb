@@ -18,8 +18,8 @@
 
       // get HTML for a jesse image tag given text
       image_tag_bitch = function(text) {
-        url = '/bitch/' + encodeURIComponent(text);
-        return '<img id="image" style="display:none;" src=' + url + '/>'
+        url = '/bitch.jpg?text=' + escape(text);
+        return '<img id="image" style="display:none;" src=' + url + '>'
       }
 
       // update/create jesse image
