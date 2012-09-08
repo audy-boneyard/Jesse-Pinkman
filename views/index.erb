@@ -37,7 +37,7 @@
         // check if there is a hash in the url
         // if so, use it as text for the image 
         if (document.location.hash) {
-          image_tag = image_tag_bitch(document.location.hash.slice(1));
+          image_tag = image_tag_bitch(unescape(document.location.hash.slice(1)));
         } else {
           image_tag = image_tag_bitch("<%= @text %>");
         }
