@@ -22,7 +22,6 @@
       // get HTML for a jesse image tag given text
       image_tag_bitch = function(text) {
         url = '/bitch.jpg?text=' + escape(text);
-        console.log(text);
         return '<img id="image" style="display:none;" src=' + url + '>'
       }
 
@@ -34,15 +33,22 @@
       }
      
       $(document).ready(function () {
-        // display the default image
 
-        image_tag = image_tag_bitch("<%= @text %>");
+        // check if there is a hash in the url
+        // if so, use it as text for the image 
+        if (document.location.hash) {
+          image_tag = image_tag_bitch(document.location.hash.slice(1));
+        } else {
+          image_tag = image_tag_bitch("<%= @text %>");
+        }
+
         $("#jesse-image-box").append(image_tag);
         $("#image").fadeIn(1000);
 
         // assign handlers once the document is ready
         $('#update-image-button').click(function () {
           text = $('#image-text').val();
+          document.location.hash = text;
           update_jesse_bitch(text); 
         });
       });
