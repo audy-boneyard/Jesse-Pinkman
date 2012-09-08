@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title>Jesse Pinkman me, Bitch!</title>
+    <style type="text/css">
+      body {
+        background-color: #000;
+      }
+      #jesse-pinkman {
+        margin-left: auto;
+        margin-top: 55px;
+        width: 700px;
+      }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+
+    <script>
+
+      image_tag_bitch = function(text) {
+        url = '/bitch/' + encodeURIComponent(text);
+        return '<img id="image" style="display:none;" src=' + url + '/>'
+      }
+
+      $('#pinkmanform').submit(function () {
+
+      });
+
+      $(document).ready(function () {
+        $("#jesse-image-box").append(image_tag_bitch('test me'));
+        $("#image").fadeIn(1000);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="jesse-pinkman">
+      <a href="#">Generate Another</a>
+      <div id="jesse-image-box">
+      </div>
+    </div>
+  </body>
+</html>

@@ -2,16 +2,32 @@ class JessePinkman
 
   get '/' do
     # render main page
+    erb :index
   end
 
-  get '/me/:text' do
+  # generate image with custom top text and default
+  # bottom text
+  # /bitch/add%20text%20to%the%top
+  get '/bitch/:text/?' do
     text = params[:text]
 
-    # generate image
+    # TODO implement caching
     jesse = PinkmanImage.new :top_text    => text,
                              :bottom_text => 'BITCH'
 
-    # return some binary data
+    content_type 'image/jpeg'
+    jesse.image_data
+  end
+
+  # generate image with custom top and bottom text
+  # /custom?top_text=foo&bottom_text=bar
+  get '/custom' do
+    top_text    = params[:top_text]
+    bottom_text = params[:bottom_text]
+
+    jesse = PinkmanImage.new :top_text => top_text,
+                             :bottom_text => bottom_text
+
     content_type 'image/jpeg'
     jesse.image_data
   end
@@ -39,23 +55,26 @@ class PinkmanImage
     img = Magick::ImageList.new(BASE_IMAGE)
 
     # top text
-    txt = Magick::Draw.new
-    img.annotate(txt, 0, 0, 0, 0, @top_text) do
-      txt.gravity     = Magick::NorthGravity
-      txt.pointsize   = 35
-      txt.stroke      = "#000000"
-      txt.fill        = "#FFFFFF"
-      txt.font_weight = Magick::BoldWeight
+    text = Magick::Draw.new
+    text.font_family = "helvetica"
+
+    text.pointsize   = 35
+    text.fill        = "#FFFFFF"
+    text.stroke      = "#000000"
+    text.font_weight = Magick::BoldWeight
+
+    img.annotate(text, 0, 0, 0, 0, @top_text) do
+      text.gravity     = Magick::NorthGravity
     end
 
     # bottom text
-    txt = Magick::Draw.new
-    img.annotate(txt, 0, 0, 0, 0, @bottom_text) do
-      txt.gravity     = Magick::SouthGravity
-      txt.pointsize   = 35
-      txt.stroke      = "#000000"
-      txt.fill        = "#FFFFFF"
-      txt.font_weight = Magick::BoldWeight
+    text = Magick::Draw.new
+    img.annotate(text, 0, 0, 0, 0, @bottom_text) do
+      text.gravity     = Magick::SouthGravity
+      text.stroke      = "#000000"
+      text.fill        = "#FFFFFF"
+      text.font_weight = Magick::BoldWeight
+      text.pointsize  = 35
     end
 
     img.format = 'jpeg'
